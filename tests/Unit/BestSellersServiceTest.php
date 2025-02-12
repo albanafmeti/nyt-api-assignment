@@ -48,8 +48,12 @@ class  BestSellersServiceTest extends TestCase
             'title' => 'Test Book',
             'isbn' => '1111111111111,2222222222222',
             'offset' => 0,
-            'api-key' => config('services.nyt.api_key'),
         ];
+
+        $apiKey = config('services.nyt.api_key');
+        if ($apiKey) {
+            $expectedQuery['api-key'] = $apiKey;
+        }
 
         Http::assertSent(function ($request) use ($expectedQuery) {
             $parsedUrl = parse_url($request->url());
@@ -92,7 +96,7 @@ class  BestSellersServiceTest extends TestCase
             'results' => [
                 [
                     'title' => 'Cached Book',
-                    'author' => 'John Doe',
+                    'author' => 'Alban Afmeti',
                 ],
             ],
         ];
